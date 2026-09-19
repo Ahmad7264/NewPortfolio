@@ -1,0 +1,680 @@
+/* ============================================================
+   PROJECTS — PINNED VIEWPORT & TRUE PHYSICAL STACKING CARDS
+   Clean, compact, premium. 100% Opaque solid backgrounds.
+   ============================================================ */
+
+/* ── Section Root ──────────────────────────────────────────── */
+.projects-section {
+  background: #080b11;
+  position: relative;
+  width: 100%;
+}
+
+/* ── Calculated Scroll Track (Comfortable 200vh distance) ────── */
+.projects-scroll-track {
+  position: relative;
+  width: 100%;
+  height: 200vh;
+}
+
+/* ── Pinned Viewport Frame (Locks to screen: top: 0, height: 100vh) ── */
+.projects-pinned-frame {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.projects-pinned-content {
+  width: 100%;
+  max-width: 1100px;
+  padding: 4.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Section Heading (Positioned with clear breathing room above cards) ── */
+.projects-heading-wrap {
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto 1.5rem;
+  text-align: left;
+}
+
+.projects-category-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.projects-category-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #6366f1;
+  letter-spacing: 0.08em;
+}
+
+.projects-category-sep {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #334155;
+}
+
+.projects-category-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.14em;
+}
+
+.projects-main-title {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+
+.projects-subtitle {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Shared Grid Viewport (All 4 cards share the exact same area!) ── */
+.pcard-stack-viewport {
+  position: relative;
+  width: 100%;
+  max-width: 1020px;
+  min-height: 460px;
+  display: grid;
+  grid-template-areas: "cardstack";
+  justify-items: center;
+  align-items: start;
+}
+
+.pcard-stack-item {
+  grid-area: cardstack;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  isolation: isolate; /* CRITICAL: Creates independent stacking context per card */
+}
+
+/* ── The Physical Card (100% SOLID OPAQUE) ───────────────────── */
+.pcard {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 1020px;
+  min-height: 420px;
+  max-height: 470px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  border-radius: 20px;
+  background-color: #0b0f17 !important;
+  background: #0b0f17 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, 0.95),
+    0 10px 25px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow: hidden !important;
+  will-change: transform;
+}
+
+/* 100% Solid background backing so NO underlying text can ever bleed */
+.pcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #0b0f17;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.pcard:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 30px 75px rgba(0, 0, 0, 0.98),
+    0 0 25px var(--card-glow, rgba(99, 102, 241, 0.08));
+}
+
+/* ── Card Left Side: Content & Actions (SOLID OPAQUE) ────────── */
+.pcard-content {
+  position: relative;
+  z-index: 2;
+  padding: 2.25rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: #0b0f17 !important;
+  background: #0b0f17 !important;
+  text-align: left;
+}
+
+/* Meta row: Project Number + Category Badge */
+.pcard-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.pcard-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+}
+
+.pcard-category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pcard-category-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Title */
+.pcard-title {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 0.2rem;
+}
+
+/* Subtitle */
+.pcard-subtitle {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+/* Description */
+.pcard-description {
+  font-size: 0.83rem;
+  color: #cbd5e1;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Technology Tags */
+.pcard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.pcard-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.pcard-tag--more {
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+/* Action Buttons */
+.pcard-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.pcard-desktop-actions {
+  display: block;
+}
+
+.pcard-mobile-actions {
+  display: none;
+}
+
+.pcard-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, filter 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.pcard-btn--secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f1f5f9;
+}
+
+.pcard-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.pcard-btn--primary {
+  color: #ffffff;
+}
+
+.pcard-btn--primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+.pcard-btn--disabled {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #64748b !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  cursor: not-allowed;
+}
+
+/* ── Card Right Side: Browser Preview (SOLID OPAQUE) ─────────── */
+.pcard-preview-column {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  background-color: #0b0f17 !important;
+  background: #0b0f17 !important;
+  overflow: hidden;
+}
+
+.pcard-preview {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 380px;
+  background-color: #0b0f17 !important;
+  background: #0b0f17 !important;
+  overflow: hidden;
+}
+
+.pcard-preview-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.8rem;
+  background: rgba(255, 255, 255, 0.025);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.pcard-chrome-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pcard-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.pcard-dot--red { background: #ef4444; }
+.pcard-dot--yellow { background: #f59e0b; }
+.pcard-dot--green { background: #10b981; }
+
+.pcard-chrome-url {
+  flex: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: #64748b;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pcard-preview-body {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #0b0f17 !important;
+  background: #0b0f17 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+/* Screenshot image — strict 100% object-contain */
+.pcard-screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.pcard:hover .pcard-screenshot {
+  transform: scale(1.02);
+}
+
+/* ── In-Code Mockup Styles (Solid, Opaque & Sharp) ───────────── */
+.mockup-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #0b0f17 !important;
+  background: #0b0f17 !important;
+  padding: 1rem 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  box-sizing: border-box;
+}
+
+.mockup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 0.6rem;
+}
+
+.mockup-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+}
+
+.mockup-app-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.mockup-app-sub {
+  font-size: 0.62rem;
+  color: #64748b;
+}
+
+.mockup-badge {
+  font-size: 0.6rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.mockup-search {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid;
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+  font-size: 0.68rem;
+  color: #cbd5e1;
+}
+
+.mockup-search-text {
+  flex: 1;
+}
+
+.mockup-http-ok {
+  margin-left: auto;
+  font-size: 0.6rem;
+  color: #34d399;
+  font-weight: 700;
+}
+
+.mockup-card {
+  background: #0f1523;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.mockup-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.mockup-question {
+  font-size: 0.72rem;
+  color: #e2e8f0;
+  line-height: 1.4;
+}
+
+.mockup-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.mockup-option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 5px;
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.mockup-option.selected {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.35);
+  color: #f1f5f9;
+}
+
+.opt-key {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  color: white;
+}
+
+.mockup-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: #64748b;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ── Responsive Mobile & Tablet Layout ───────────────────────── */
+@media (max-width: 960px) {
+  .projects-pinned-content {
+    padding: 4.25rem 1rem 1rem;
+  }
+
+  .projects-heading-wrap {
+    margin-bottom: 0.75rem;
+  }
+
+  .pcard-stack-viewport {
+    min-height: auto;
+  }
+
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    max-height: 76vh;
+    min-height: auto;
+    overflow-y: auto !important;
+    padding: 1.25rem;
+    gap: 0.65rem;
+    border-radius: 16px;
+  }
+
+  .pcard-content {
+    padding: 0;
+    border-right: none;
+    gap: 0.5rem;
+  }
+
+  .pcard-title {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    margin-bottom: 0.15rem;
+  }
+
+  .pcard-subtitle {
+    font-size: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .pcard-description {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+  }
+
+  .pcard-tags {
+    margin-bottom: 0.25rem;
+    gap: 0.3rem;
+  }
+
+  .pcard-desktop-actions {
+    display: none;
+  }
+
+  .pcard-mobile-actions {
+    display: flex;
+    width: 100%;
+    margin: 0.15rem 0;
+  }
+
+  .pcard-mobile-actions .pcard-actions {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pcard-mobile-actions .pcard-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  /* Large Website Preview on Mobile (Section 13 & 14) */
+  .pcard-preview-column {
+    width: 100%;
+    height: 215px;
+    min-height: 215px;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0b0f17 !important;
+  }
+
+  .pcard-preview {
+    min-height: 215px;
+    height: 215px;
+    background: #0b0f17 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-pinned-content {
+    padding: 3.75rem 0.75rem 0.75rem;
+  }
+
+  .projects-main-title {
+    font-size: 1.45rem;
+  }
+
+  .pcard {
+    max-height: 78vh;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .pcard-preview-column {
+    height: 195px;
+    min-height: 195px;
+  }
+
+  .pcard-preview {
+    min-height: 195px;
+    height: 195px;
+  }
+
+  .pcard-mobile-actions .pcard-actions {
+    flex-direction: row;
+  }
+}

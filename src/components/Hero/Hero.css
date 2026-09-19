@@ -1,0 +1,422 @@
+/* ============================================================
+   HERO SECTION — HIGH-RISE DEVELOPER WORKSPACE THEME
+   Recreated accurately based on reference UI design.
+   ============================================================ */
+
+.hero-ref-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #080b11;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+
+/* ── Background Workspace Image & Overlays ─────────────────── */
+.hero-ref-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.hero-ref-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 11, 17, 0.98) 0%,
+      rgba(8, 11, 17, 0.94) 38%,
+      rgba(8, 11, 17, 0.74) 62%,
+      rgba(8, 11, 17, 0.35) 85%,
+      rgba(8, 11, 17, 0.65) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8, 11, 17, 0.8) 0%,
+      transparent 20%,
+      transparent 75%,
+      rgba(8, 11, 17, 0.95) 100%
+    );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-ref-radial-glow {
+  position: absolute;
+  top: 20%;
+  left: 12%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Floating Accents from Reference ───────────────────────── */
+.hero-ref-mission-quote {
+  position: absolute;
+  top: 7rem;
+  left: 52%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.hero-ref-mission-words {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+.hero-ref-mission-line {
+  width: 36px;
+  height: 2px;
+  background: rgba(56, 189, 248, 0.5);
+  margin: 0.5rem 0;
+}
+
+.hero-ref-mission-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.14em;
+}
+
+/* Floating Script Tag on Right Window */
+.hero-ref-script-tag {
+  position: absolute;
+  top: 6.5rem;
+  right: 3.5rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+  text-align: right;
+  transform: rotate(-5deg);
+  pointer-events: none;
+}
+
+.hero-ref-script-line1,
+.hero-ref-script-line2 {
+  font-family: 'Segoe Script', 'Brush Script MT', 'Caveat', cursive, sans-serif;
+  font-size: 1.35rem;
+  color: #e2e8f0;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 0 15px rgba(255, 255, 255, 0.4),
+    0 0 30px rgba(56, 189, 248, 0.3);
+}
+
+/* Floating Edge Bullet Tags */
+.hero-ref-floating-tags {
+  position: absolute;
+  bottom: 28%;
+  right: 2rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.725rem;
+  color: rgba(148, 163, 184, 0.75);
+  background: rgba(8, 11, 17, 0.5);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+/* ── Main Left Container ───────────────────────────────────── */
+.hero-ref-container {
+  position: relative;
+  z-index: 10;
+}
+
+.hero-ref-content {
+  max-width: 640px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Greeting */
+.hero-ref-greeting {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-bottom: 0.35rem;
+}
+
+/* Full Capital Name */
+.hero-ref-title {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.hero-ref-name-white {
+  color: #ffffff;
+  text-shadow: 0 4px 28px rgba(255, 255, 255, 0.15);
+}
+
+.hero-ref-name-cyan {
+  background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.45));
+}
+
+/* Roles */
+.hero-ref-roles {
+  margin-bottom: 1.35rem;
+}
+
+.hero-ref-role-primary {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.15rem, 1.9vw, 1.4rem);
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+}
+
+.hero-ref-role-secondary {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.hero-ref-role-pipe {
+  color: #475569;
+  margin: 0 0.45rem;
+}
+
+/* Description */
+.hero-ref-desc {
+  font-size: clamp(0.925rem, 1.3vw, 1.05rem);
+  color: #94a3b8;
+  line-height: 1.75;
+  max-width: 580px;
+  margin-bottom: 2rem;
+}
+
+/* Action CTAs */
+.hero-ref-ctas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-ref-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.65rem;
+  border-radius: 999px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 55%, #6366f1 100%);
+  box-shadow:
+    0 0 25px rgba(14, 165, 233, 0.45),
+    0 4px 15px rgba(37, 99, 235, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-ref-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(14, 165, 233, 0.65);
+  filter: brightness(1.1);
+}
+
+.btn-ref-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.55rem;
+  border-radius: 999px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-ref-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* 5 Domain Icon Strip */
+.hero-ref-domains {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2.75rem;
+  flex-wrap: wrap;
+}
+
+.hero-ref-domain-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  text-align: center;
+}
+
+.hero-ref-domain-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(13, 18, 30, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-ref-domain-item:hover .hero-ref-domain-icon {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.hero-ref-domain-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #94a3b8;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* Bottom Stats Matrix Strip */
+.hero-ref-stats {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-ref-stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hero-ref-stat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.hero-ref-stat-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Responsive Adaptations ────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero-ref-section {
+    padding-top: 5.5rem;
+  }
+
+  .hero-ref-gradient-overlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(8, 11, 17, 0.98) 0%,
+        rgba(8, 11, 17, 0.95) 55%,
+        rgba(8, 11, 17, 0.8) 100%
+      );
+  }
+
+  .hero-ref-domains {
+    gap: 1.15rem;
+  }
+
+  .hero-ref-stats {
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-ref-section {
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-ref-title {
+    font-size: 2.6rem;
+  }
+
+  .hero-ref-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .btn-ref-primary,
+  .btn-ref-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-ref-domains {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .hero-ref-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    width: 100%;
+  }
+}

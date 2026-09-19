@@ -1,0 +1,107 @@
+/* ============================================================
+   ABOUT SECTION — INTERACTIVE TIMELINE & STORYTELLING
+   ============================================================ */
+
+.about-section {
+  position: relative;
+  background: #080b11;
+}
+
+.about-timeline-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .about-timeline-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Vertical Timeline Track on Left */
+.about-timeline-track {
+  position: relative;
+  width: 48px;
+}
+
+.about-timeline-bg-line {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 23px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.about-timeline-fill-line {
+  position: absolute;
+  top: 24px;
+  left: 23px;
+  width: 2px;
+  background: linear-gradient(to bottom, #6366f1, #06b6d4, #8b5cf6, #10b981);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.7);
+  z-index: 2;
+}
+
+/* Stage Node List */
+.about-story-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.about-story-item {
+  position: relative;
+}
+
+/* Desktop Node Circle Marker */
+.about-node-marker {
+  position: absolute;
+  left: -4.5rem;
+  top: 0.5rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.about-node-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Story Card */
+.about-story-card {
+  position: relative;
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-story-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 24px rgba(99, 102, 241, 0.08);
+}
+
+@media (max-width: 640px) {
+  .about-story-card {
+    padding: 1.25rem 1.25rem;
+  }
+  .about-story-stages {
+    gap: 2.25rem;
+  }
+}

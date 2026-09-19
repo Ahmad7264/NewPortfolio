@@ -1,0 +1,136 @@
+/* ============================================================
+   SKILLS SECTION — VERTICAL TIMELINE & SEQUENTIAL REVEALS
+   ============================================================ */
+
+.skills-section {
+  position: relative;
+  background: #080b11;
+}
+
+.skills-timeline-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .skills-timeline-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Vertical Timeline Track on Left */
+.skills-timeline-track {
+  position: relative;
+  width: 48px;
+}
+
+.skills-timeline-bg-line {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 23px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.skills-timeline-fill-line {
+  position: absolute;
+  top: 24px;
+  left: 23px;
+  width: 2px;
+  background: linear-gradient(to bottom, #6366f1, #8b5cf6, #06b6d4, #3b82f6, #f59e0b, #10b981);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.7);
+  z-index: 2;
+}
+
+/* Timeline Category List */
+.skills-timeline-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.skills-timeline-item {
+  position: relative;
+}
+
+/* Desktop Node Circle Marker */
+.skills-node-marker {
+  position: absolute;
+  left: -4.5rem;
+  top: 0.5rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.skills-node-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Category Card */
+.skills-timeline-card {
+  position: relative;
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+}
+
+.skills-timeline-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.65),
+    0 0 25px var(--cat-color, rgba(99, 102, 241, 0.08));
+  transform: translateY(-2px);
+}
+
+/* Technology Badges */
+.skill-tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  user-select: none;
+  cursor: default;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.skill-tech-badge:hover,
+.skill-tech-badge:focus-visible {
+  transform: scale(1.04);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 640px) {
+  .skills-timeline-card {
+    padding: 1.25rem 1.25rem;
+  }
+  .skills-timeline-stages {
+    gap: 1.75rem;
+  }
+}

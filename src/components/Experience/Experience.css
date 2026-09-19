@@ -1,0 +1,355 @@
+/* ============================================================
+   EXPERIENCE SECTION — TIMELINE + HOVER/TAP EXPANSION
+   Clean desktop layout & native vertical mobile layout.
+   ============================================================ */
+
+.experience-section {
+  position: relative;
+  background: #080b11;
+}
+
+.experience-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Desktop Base Line & Progress Fill ─────────────────────── */
+.experience-timeline::before {
+  content: '';
+  position: absolute;
+  left: 140px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.exp-progress-line {
+  position: absolute;
+  left: 139px;
+  top: 12px;
+  width: 2px;
+  background: linear-gradient(to bottom, #6366f1, #06b6d4, #8b5cf6);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.8);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Experience Item (Desktop 2-column grid) ───────────────── */
+.exp-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  padding: 1.25rem 0;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.exp-item + .exp-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Connector dot */
+.exp-dot {
+  position: absolute;
+  left: 133px;
+  top: 1.8rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(99, 102, 241, 0.35);
+  background: #080b11;
+  z-index: 2;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.exp-item:hover .exp-dot,
+.exp-item:focus-visible .exp-dot,
+.exp-item.active-node .exp-dot {
+  border-color: #6366f1;
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.5);
+  transform: scale(1.15);
+}
+
+.exp-dot-inner {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #6366f1;
+  transform: scale(0.5);
+  opacity: 0.6;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.exp-item:hover .exp-dot-inner,
+.exp-item:focus-visible .exp-dot-inner,
+.exp-dot-inner.active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Date column (Desktop) */
+.exp-date {
+  text-align: right;
+  padding-right: 2rem;
+  padding-top: 0.2rem;
+  user-select: none;
+}
+
+.exp-period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.exp-duration {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: #818cf8;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+/* Mobile date row (hidden on desktop) */
+.exp-mobile-date-row {
+  display: none;
+}
+
+/* Content Card */
+.exp-content {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.exp-item:hover .exp-content,
+.exp-item:focus-visible .exp-content,
+.exp-item.expanded .exp-content {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(99, 102, 241, 0.08);
+  transform: translateY(-2px);
+}
+
+.exp-header {
+  margin-bottom: 0.5rem;
+}
+
+.exp-company {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.2rem;
+}
+
+.exp-role {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.exp-type-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.exp-summary-preview {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-top: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Expand hint */
+.exp-expand-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.25rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Expandable content area */
+.exp-expandable-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.exp-expandable-wrapper.open {
+  grid-template-rows: 1fr;
+}
+
+.exp-expandable-content {
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.exp-expandable-wrapper.open .exp-expandable-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.exp-responsibilities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.exp-responsibility {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.825rem;
+  color: #94a3b8;
+  line-height: 1.55;
+}
+
+.exp-responsibility::before {
+  content: '›';
+  color: #6366f1;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: -3px;
+}
+
+.exp-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.exp-tech-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.exp-tech-tag:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.08);
+  color: #818cf8;
+}
+
+/* ── Mobile Vertical Timeline Layout ────────────────────────── */
+@media (max-width: 860px) {
+  .experience-timeline {
+    gap: 1.25rem;
+  }
+
+  /* Timeline vertical track line at left 16px */
+  .experience-timeline::before {
+    left: 16px;
+    top: 10px;
+    bottom: 10px;
+  }
+
+  .exp-progress-line {
+    left: 15px;
+    top: 10px;
+  }
+
+  /* Single vertical column with comfortable left indentation */
+  .exp-item {
+    display: block;
+    padding: 0 0 1.25rem 2.5rem;
+    position: relative;
+    border-top: none !important;
+  }
+
+  /* Connector dot aligned on line at left 16px (16 - 7 = 9px) */
+  .exp-dot {
+    left: 9px;
+    top: 1.1rem;
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Desktop date hidden on mobile */
+  .exp-date {
+    display: none;
+  }
+
+  /* Mobile date row displayed inside card top */
+  .exp-mobile-date-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+  }
+
+  .exp-period-mobile {
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .exp-content {
+    padding: 1.15rem 1.25rem;
+    border-radius: 14px;
+  }
+
+  .exp-company {
+    font-size: 1.05rem;
+  }
+
+  .exp-role {
+    font-size: 0.825rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .exp-item {
+    padding-left: 2.2rem;
+  }
+
+  .experience-timeline::before {
+    left: 12px;
+  }
+
+  .exp-progress-line {
+    left: 11px;
+  }
+
+  .exp-dot {
+    left: 5px;
+  }
+
+  .exp-content {
+    padding: 1rem;
+  }
+}
