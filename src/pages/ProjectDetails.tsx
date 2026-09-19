@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { GithubIcon } from '../components/icons/SocialIcons';
 import { projects } from '../data/portfolioData';
 import ProjectPreview from '../components/Projects/ProjectPreview';
+import '../components/Projects/Projects.css';
 
 export const ProjectDetails: React.FC = () => {
   const { slug, projectId } = useParams<{ slug?: string; projectId?: string }>();
@@ -22,7 +23,12 @@ export const ProjectDetails: React.FC = () => {
     if (project) {
       document.title = `${project.title} — MD Dilshad | Case Study`;
     }
-    window.scrollTo(0, 0);
+    // @ts-ignore
+    if (window.__lenis) {
+      // @ts-ignore
+      window.__lenis.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [project]);
 
   if (!project) {

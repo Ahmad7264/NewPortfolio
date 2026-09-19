@@ -1,7 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
+
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const lenisRef = useRef<Lenis | null>(null);
+  const location = useLocation();
+
   useEffect(() => {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -18,6 +28,9 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       infinite: false,
     });
 
+    lenisRef.current = lenis;
+    window.__lenis = lenis;
+
     let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
@@ -29,8 +42,26 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisRef.current = null;
+      delete window.__lenis;
     };
   }, []);
+
+  // Reset scroll on route change
+  useEffect(() => {
+    if (lenisRef.current) {
+      if (location.hash) {
+        const id = location.hash.replace('#', '');
+        const el = document.getElementById(id);
+        if (el) {
+          lenisRef.current.scrollTo(el, { duration: 1.0 });
+        }
+      } else {
+        lenisRef.current.scrollTo(0, { immediate: true });
+        window.scrollTo(0, 0);
+      }
+    }
+  }, [location.pathname, location.hash]);
 
   return <>{children}</>;
 };

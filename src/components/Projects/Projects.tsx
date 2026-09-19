@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
 import { projects, ProjectItem } from '../../data/portfolioData';
@@ -16,54 +16,86 @@ interface StackingCardProps {
 const ProjectStackCard: React.FC<StackingCardProps> = ({
   project,
   index,
-  total,
+  total: _total,
   progress,
 }) => {
+  const navigate = useNavigate();
+
   // Calibrated timeline keyframe intervals for 5 projects
   // Project 01: front at start
-  // Project 02: slides up onto 01
-  // Project 03: slides up onto 02
-  // Project 04: slides up onto 03
-  // Project 05: slides up onto 04
+  // Project 02: slides up onto 01 (starts at 0.06, arrives at 0.24)
+  // Project 03: slides up onto 02 (starts at 0.30, arrives at 0.48)
+  // Project 04: slides up onto 03 (starts at 0.54, arrives at 0.72)
+  // Project 05: slides up onto 04 (starts at 0.78, arrives at 0.94)
   const timeline = [0, 0.06, 0.24, 0.30, 0.48, 0.54, 0.72, 0.78, 0.94, 1.0];
 
   let yOutput: number[];
   let scaleOutput: number[];
   let brightnessOutput: number[];
+  let opacityOutput: number[];
 
   if (index === 0) {
     yOutput = [0, 0, -20, -20, -40, -40, -60, -60, -80, -80];
     scaleOutput = [1.0, 1.0, 0.98, 0.98, 0.96, 0.96, 0.94, 0.94, 0.92, 0.92];
     brightnessOutput = [1.0, 1.0, 0.92, 0.92, 0.85, 0.85, 0.78, 0.78, 0.72, 0.72];
+    opacityOutput = [1.0, 1.0, 1.0, 1.0, 0.92, 0.92, 0.8, 0.8, 0.65, 0.65];
   } else if (index === 1) {
-    yOutput = [450, 450, 0, 0, -20, -20, -40, -40, -60, -60];
+    yOutput = [850, 850, 0, 0, -20, -20, -40, -40, -60, -60];
     scaleOutput = [0.98, 0.98, 1.0, 1.0, 0.98, 0.98, 0.96, 0.96, 0.94, 0.94];
     brightnessOutput = [1.0, 1.0, 1.0, 1.0, 0.92, 0.92, 0.85, 0.85, 0.78, 0.78];
+    opacityOutput = [0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.92, 0.92, 0.8, 0.8];
   } else if (index === 2) {
-    yOutput = [450, 450, 450, 450, 0, 0, -20, -20, -40, -40];
+    yOutput = [850, 850, 850, 850, 0, 0, -20, -20, -40, -40];
     scaleOutput = [0.98, 0.98, 0.98, 0.98, 1.0, 1.0, 0.98, 0.98, 0.96, 0.96];
     brightnessOutput = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.92, 0.92, 0.85, 0.85];
+    opacityOutput = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.92, 0.92];
   } else if (index === 3) {
-    yOutput = [450, 450, 450, 450, 450, 450, 0, 0, -20, -20];
+    yOutput = [850, 850, 850, 850, 850, 850, 0, 0, -20, -20];
     scaleOutput = [0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 1.0, 1.0, 0.98, 0.98];
     brightnessOutput = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.92, 0.92];
+    opacityOutput = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0];
   } else {
-    yOutput = [450, 450, 450, 450, 450, 450, 450, 450, 0, 0];
+    yOutput = [850, 850, 850, 850, 850, 850, 850, 850, 0, 0];
     scaleOutput = [0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 1.0, 1.0];
     brightnessOutput = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+    opacityOutput = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0];
   }
 
   const y = useTransform(progress, timeline, yOutput);
   const scale = useTransform(progress, timeline, scaleOutput);
   const brightness = useTransform(progress, timeline, brightnessOutput);
+  const opacity = useTransform(progress, timeline, opacityOutput);
   const filter = useTransform(brightness, (b) => `brightness(${b})`);
 
+  // Active top-card pointer-events detection so covered or off-screen cards never block clicks
+  const pointerEvents = useTransform(progress, (p) => {
+    if (index === 0) return p < 0.28 ? 'auto' : 'none';
+    if (index === 1) return p >= 0.18 && p < 0.52 ? 'auto' : 'none';
+    if (index === 2) return p >= 0.42 && p < 0.76 ? 'auto' : 'none';
+    if (index === 3) return p >= 0.66 && p < 0.96 ? 'auto' : 'none';
+    return p >= 0.88 ? 'auto' : 'none';
+  });
+
   const hasLiveUrl = Boolean(project.liveUrl);
+
+  const handleViewDetails = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const targetUrl = `/projects/${project.slug || project.id}`;
+    // @ts-ignore
+    if (window.__lenis) {
+      // @ts-ignore
+      window.__lenis.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo(0, 0);
+    navigate(targetUrl);
+  };
 
   const actionButtons = (
     <div className="pcard-actions">
       <Link
         to={`/projects/${project.slug || project.id}`}
+        onClick={handleViewDetails}
         className="pcard-btn pcard-btn--secondary group/btn"
         aria-label={`View full case study for ${project.title}`}
       >
@@ -101,17 +133,20 @@ const ProjectStackCard: React.FC<StackingCardProps> = ({
   );
 
   return (
-    <div
+    <motion.div
       className="pcard-stack-item"
       style={{
         zIndex: (index + 1) * 10,
+        pointerEvents,
       }}
     >
       <motion.article
         style={{
           y,
           scale,
+          opacity,
           filter,
+          pointerEvents,
           transformOrigin: 'top center',
           // @ts-ignore
           '--card-glow': `${project.color}15`,
@@ -142,7 +177,17 @@ const ProjectStackCard: React.FC<StackingCardProps> = ({
             </div>
 
             {/* Title & subtitle */}
-            <h3 className="pcard-title">{project.title}</h3>
+            <h3 className="pcard-title">
+              <Link
+                to={`/projects/${project.slug || project.id}`}
+                onClick={handleViewDetails}
+                className="hover:text-cyan-400 transition-colors duration-200"
+                style={{ color: 'inherit', textDecoration: 'none' }}
+                title={`View details for ${project.title}`}
+              >
+                {project.title}
+              </Link>
+            </h3>
             <p className="pcard-subtitle">{project.subtitle}</p>
 
             {/* Short description */}
@@ -177,11 +222,21 @@ const ProjectStackCard: React.FC<StackingCardProps> = ({
         </div>
 
         {/* ── Right side / Mobile Bottom: Large Website Preview ── */}
-        <div className="pcard-preview-column">
+        <div
+          className="pcard-preview-column cursor-pointer"
+          onClick={handleViewDetails}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleViewDetails(e as unknown as React.MouseEvent);
+          }}
+          title={`Click to view case study for ${project.title}`}
+          aria-label={`View case study for ${project.title}`}
+        >
           <ProjectPreview project={project} />
         </div>
       </motion.article>
-    </div>
+    </motion.div>
   );
 };
 
